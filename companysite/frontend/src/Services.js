@@ -1,134 +1,92 @@
 import React from "react";
-import Navbar from "./Navbar";
+import service1 from "./assets/service1.jpg";
+import service2 from "./assets/service2.jpg";
+import service3 from "./assets/service3.jpg";
+import { motion } from "framer-motion";
 
 export default function Services() {
   const services = [
     {
-      title: "Data Architecture and Design",
-      description: `We help customers to build a firm foundation for business intelligence by leveraging our expertise across the data lifecycle with strong architecture, solution design and data strategy.
-
-Our expertise enables us to combine the best technologies and proven approach to deliver the most effective results and provide you with solutions that can help you collect relevant, understandable, and accurate data displayed in real time.
-
-We deliver on strategy, MVPs, PoCs and real-world ventures taking full advantage of big data and data lake paradigms.`,
-      image: "https://via.placeholder.com/400x200",
+      title: "Data Architecture",
+      description: "Design and manage scalable and robust data systems.",
+      image: service1,
     },
     {
       title: "Data Engineering",
-      description: `We ensure that we will not take a one-size-fits-all approach. And we adhere to company’s obligations to form a custom data integration consulting solution for data integration needs.
-
-Our data integration expertise encompasses combining data from different sources into a single, unified view, to ultimately obtain useful information on technical and business processes.
-
-We tailor each experience and ensure that our clients are satisfied with the results. Bring together the data by integrating structured and unstructured data from online and offline systems and add new data feeds quickly and efficiently.`,
-      image: "https://via.placeholder.com/400x200",
+      description: "Build pipelines to process and transform data efficiently.",
+      image: service2,
     },
     {
-      title: "Advanced Analytics / Machine Learning",
-      description: `We offer End to End Analytical solutions from Ideation to deployment including Discovery, Design, Development and Deployment.
-
-The base of any machine learning use-case is data. With the help of data engineers who also understand the business, we bring in data from disparate data sources and create a data-lake, which is one source of truth. This can be used for descriptive reporting and predictive ML models to give clients a unique advantage.`,
-      image: "https://via.placeholder.com/400x200",
-    },
-    {
-      title: "Data Visualisation & Reporting",
-      description: `We aid customers brings data to life using Data visualization, making the master storyteller of the insights hidden within numbers.
-
-Through live dashboards, interactive reports, charts, graphs, and other visual representations, data visualization helps users develop powerful business insight quickly and effectively.`,
-      image: "https://via.placeholder.com/400x200",
-    },
-    {
-      title: "Data Governance",
-      description: `Data governance is the best way to help your organization become data centric. We provide solutions to grow your business while ensuring internal and external policies are adhering compliance Easily, Invisibly and Frictionless.`,
-      image: "https://via.placeholder.com/400x200",
-    },
-    {
-      title: "Master Data Management",
-      description: `Our key focus is to ensure you are using the most up to date and reliable data across business units which is a single source of truth and can be shared and leveraged throughout the organisation.`,
-      image: "https://via.placeholder.com/400x200",
-    },
-    {
-      title: "Cloud Computing Offering",
-      description: `We are experienced in a variety of cloud computing solutions, such as cloud migration strategy, cloud migration services and cloud-native design and development.
-
-We offer full range of support for Digital solutions on major cloud platform including AWS, Azure and GCP.`,
-      image: "https://via.placeholder.com/400x200",
-    },
-    {
-      title: "Quality Assurance",
-      description: `Quality Assurance is one of the key aspects of our solution offering. Data Prowess covers the full testing life cycle including Unit testing, System Integration testing, Regression and Performance automation testing.`,
-      image: "https://via.placeholder.com/400x200",
-    },
-    {
-      title: "Industry Experience Domain",
-      description: `Our team has solid domain knowledge across multiple industries, including healthcare, Telecom, e-commerce, Constructions, Super Market, Finance and Insurance, Aviation and Education.`,
-      image: "https://via.placeholder.com/400x200",
+      title: "Analytics & Visualization",
+      description: "Turn data into actionable insights and beautiful visualizations.",
+      image: service3,
     },
   ];
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#f0f2f5" }}>
-      <Navbar />
-      <section style={styles.container}>
-        <h1 style={styles.title}>Our Services</h1>
+    <section id="services" style={styles.section}>
+      <h2 style={styles.heading}>Our Services</h2>
+      <div style={styles.cardContainer}>
         {services.map((service, index) => (
-          <div key={index} style={styles.card}>
+          <motion.div
+            key={index}
+            style={styles.card}
+            whileHover={{ scale: 1.05, boxShadow: "0 15px 30px rgba(0,0,0,0.2)" }}
+            transition={{ duration: 0.3 }}
+          >
             <img src={service.image} alt={service.title} style={styles.image} />
-            <h2 style={styles.cardTitle}>{service.title}</h2>
-            <p style={styles.cardDesc}>{service.description}</p>
-          </div>
+            <h3 style={styles.title}>{service.title}</h3>
+            <p style={styles.desc}>{service.description}</p>
+          </motion.div>
         ))}
-      </section>
-      <footer style={styles.footer}>
-        Copyright © 2025 Data Prowess
-      </footer>
-    </div>
+      </div>
+    </section>
   );
 }
 
 const styles = {
-  container: {
-    padding: "60px 20px",
-    maxWidth: "1000px",
-    margin: "0 auto",
+  section: {
+    minHeight: "100vh",
+    padding: "80px 20px",
     textAlign: "center",
+    background: "linear-gradient(135deg, #667eea, #764ba2)", // gradient background
+    color: "#fff",
   },
-  title: {
-    fontSize: "36px",
-    marginBottom: "40px",
+  heading: {
+    fontSize: "3rem",
+    marginBottom: "50px",
     fontWeight: "700",
-    color: "#333",
+  },
+  cardContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "30px",
   },
   card: {
+    width: "300px",
     backgroundColor: "#fff",
-    padding: "30px",
-    marginBottom: "40px",
-    borderRadius: "12px",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-    textAlign: "left",
+    borderRadius: "15px",
+    padding: "20px",
+    color: "#333",
+    boxShadow: "0 8px 25px rgba(0,0,0,0.1)",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
   },
   image: {
     width: "100%",
-    height: "200px",
+    height: "180px",
     objectFit: "cover",
     borderRadius: "12px",
-    marginBottom: "20px",
-  },
-  cardTitle: {
-    fontSize: "24px",
     marginBottom: "15px",
-    color: "#667eea",
+  },
+  title: {
+    fontSize: "1.5rem",
+    marginBottom: "10px",
     fontWeight: "600",
   },
-  cardDesc: {
-    fontSize: "16px",
+  desc: {
+    fontSize: "1rem",
     color: "#555",
-    lineHeight: 1.6,
-  },
-  footer: {
-    padding: "20px 0",
-    textAlign: "center",
-    backgroundColor: "#667eea",
-    color: "#fff",
-    fontWeight: "500",
-    marginTop: "40px",
   },
 };

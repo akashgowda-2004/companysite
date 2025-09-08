@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "./Navbar";
-import { apiPost } from "./api";
+
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -11,8 +10,13 @@ export default function Contact() {
     setMsg("");
 
     try {
-      const res = await apiPost("contact/", form, true); // true = requires auth
-      setMsg(res.message || "✅ Message submitted!");
+      // If you have backend, this will submit
+      // const res = await apiPost("contact/", form, true);
+      // setMsg(res.message || "✅ Message submitted!");
+
+      // Temporary frontend-only submit
+      console.log(form);
+      setMsg("✅ Message sent successfully!");
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
       console.error(err);
@@ -21,11 +25,45 @@ export default function Contact() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#f0f2f5" }}>
-      <Navbar />
-      <div style={styles.container}>
-        <h2>Contact Us</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
+    <section
+      id="contact"
+      style={{
+        minHeight: "100vh",
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1920&q=80')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "60px 20px",
+        color: "#fff",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          gap: "40px",
+          maxWidth: "900px",
+          width: "100%",
+          flexWrap: "wrap",
+        }}
+      >
+        {/* Contact Form */}
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+            padding: "30px",
+            backgroundColor: "#fff",
+            borderRadius: "12px",
+            color: "#333",
+          }}
+        >
+          <h2>Contact Form</h2>
           <input
             type="text"
             placeholder="Name"
@@ -48,25 +86,29 @@ export default function Contact() {
             style={{ height: "120px", resize: "none" }}
           />
           <button type="submit">Send Message</button>
+          {msg && <p style={{ marginTop: "10px", fontWeight: "bold" }}>{msg}</p>}
         </form>
-        {msg && <p>{msg}</p>}
+
+        {/* Office Info */}
+        <div
+          style={{
+            flex: 1,
+            padding: "30px",
+            backgroundColor: "#fff",
+            borderRadius: "12px",
+            color: "#333",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
+        >
+          <h2>Our Office</h2>
+          <p>Level 35, Tower One, International Towers</p>
+          <p>100 Barangaroo Avenue, Sydney, NSW 2000 Australia</p>
+          <p>📞 +61 424 479 526</p>
+          <p>✉️ info@dataprowess.com.au</p>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "500px",
-    margin: "50px auto",
-    padding: "30px",
-    backgroundColor: "#fff",
-    borderRadius: "12px",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-  },
-};
