@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import project1 from "./assets/project1.jpg";
 import project2 from "./assets/project2.jpg";
 import project3 from "./assets/project3.jpg";
@@ -7,97 +8,101 @@ export default function Portfolio() {
   const projects = [
     {
       title: "Project One",
-      description: "Short description of Project One.",
       image: project1,
+      description: "A web application built with React and Node.js.",
     },
     {
       title: "Project Two",
-      description: "Short description of Project Two.",
       image: project2,
+      description: "Data visualization dashboard using D3.js.",
     },
     {
       title: "Project Three",
-      description: "Short description of Project Three.",
       image: project3,
+      description: "E-commerce platform with full payment integration.",
     },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % projects.length);
-    }, 2000); // change every 2 sec
-    return () => clearInterval(interval);
-  }, [projects.length]);
-
   return (
-    <section id="portfolio" style={styles.section}>
-      <div style={styles.portfolioOverlay}>
-        <h2 style={styles.heading}>Our Portfolio</h2>
-        <p style={styles.subheading}>
-          Some of our featured projects and case studies.
-        </p>
+    <motion.section
+      style={styles.section}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7 }}
+      viewport={{ once: true }}
+    >
+      <motion.h2
+        style={styles.title}
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        viewport={{ once: true }}
+      >
+        Portfolio
+      </motion.h2>
 
-        <div style={styles.projectCard}>
-          <img
-            src={projects[currentIndex].image}
-            alt={projects[currentIndex].title}
-            style={styles.projectImage}
-          />
-          <h3 style={styles.title}>{projects[currentIndex].title}</h3>
-          <p style={styles.desc}>{projects[currentIndex].description}</p>
-        </div>
+      <div style={styles.projectsContainer}>
+        {projects.map((project, idx) => (
+          <motion.div
+            key={idx}
+            style={styles.projectCard}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.05, boxShadow: "0 12px 25px rgba(0,0,0,0.4)" }}
+            transition={{ duration: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <img
+              src={project.image}
+              alt={project.title}
+              style={styles.projectImage}
+            />
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+          </motion.div>
+        ))}
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 const styles = {
   section: {
-    height: "100vh", // full screen
+    minHeight: "100vh",
     display: "flex",
-    justifyContent: "center", // horizontal center
-    alignItems: "center", // vertical center
-    background: "#f4f8ff",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundImage:
+      "url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    padding: "60px 20px",
+    color: "#fff",
     textAlign: "center",
+    scrollSnapAlign: "start",
   },
-  portfolioOverlay: {
-    maxWidth: "800px",
-    margin: "0 auto",
-  },
-  heading: {
-    fontSize: "2.5rem",
-    fontWeight: "700",
-    marginBottom: "10px",
-    color: "#222",
-  },
-  subheading: {
-    fontSize: "1.2rem",
-    color: "#555",
-    marginBottom: "30px",
+  title: { fontSize: "3rem", marginBottom: "40px" },
+  projectsContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "30px",
   },
   projectCard: {
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255,255,255,0.9)",
+    color: "#111",
     borderRadius: "12px",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+    width: "300px",
     padding: "20px",
-    transition: "all 0.5s ease-in-out",
+    textAlign: "center",
+    cursor: "pointer",
   },
   projectImage: {
     width: "100%",
-    height: "350px",
+    height: "200px",
     objectFit: "cover",
-    borderRadius: "10px",
+    borderRadius: "12px",
     marginBottom: "15px",
-  },
-  title: {
-    fontSize: "1.6rem",
-    fontWeight: "600",
-    marginBottom: "10px",
-  },
-  desc: {
-    fontSize: "1rem",
-    color: "#555",
   },
 };

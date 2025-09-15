@@ -1,235 +1,115 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
 import Navbar from "./Navbar";
 import Services from "./Services";
+import Careers from "./Careers";
+import Portfolio from "./Portfolio";
 import Contact from "./Contact";
-import Portfolio from "./Portfolio"; // ✅ import Portfolio
 
 export default function Home() {
-  return (
-    <div style={styles.scrollContainer}>
-      <Navbar />
+  const refs = {
+    home: useRef(null),
+    about: useRef(null),
+    services: useRef(null),
+    careers: useRef(null),
+    portfolio: useRef(null),
+    contact: useRef(null),
+  };
 
-      {/* Hero Section */}
-      <motion.section id="home" style={styles.hero}>
-        <div style={styles.heroOverlay}>
-          <h1 style={styles.heroTitle}>Data Prowess</h1>
-          <p style={styles.heroSubtitle}>
-            SOFTWARE DEVELOPMENT AND CONSULTING COMPANY
-          </p>
+  const scrollToSection = (section) => {
+    const ref = refs[section];
+    if (ref?.current) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  return (
+    <div style={{ overflowX: "hidden" }}>
+      <Navbar onSectionClick={scrollToSection} />
+
+      {/* Home Section */}
+      <section ref={refs.home} style={{ ...styles.fullSection, ...styles.home }}>
+        <div style={styles.overlay}>
+          <h1 style={styles.title}>Data Prowess</h1>
+          <p style={styles.subtitle}>SOFTWARE DEVELOPMENT AND CONSULTING COMPANY</p>
         </div>
-      </motion.section>
+      </section>
 
       {/* About Section */}
-      <motion.section id="about" style={styles.about}>
-        <div style={styles.aboutOverlay}>
-          <h2>About Us</h2>
-          <div style={styles.aboutContent}>
-            <div style={styles.aboutText}>
-              <p>
-                Data Prowess is a software development and consulting company
-                dedicated to excellence. We provide a comprehensive suite of
-                services including Data Engineering, Data Analytics (Descriptive
-                & Prescriptive), Application Development, Quality Assurance, and
-                digital transformation enterprise solutions.
-              </p>
-              <p>
-                Data is our heritage and has always been at the core of
-                everything we do. Our mission is to enable customers to use
-                their data and analytics to build competitive advantage.
-              </p>
-              <p>
-                Our expertise in data and analytics strengthens our ability to
-                provide data-driven solutions for Digital and Customer
-                Engagement services, supported by Cloud & Technology.
-              </p>
-              <p>
-                Being vendor agnostic, we provide independent advice on the best
-                solutions, with frameworks and best practices that accelerate
-                technology adoption and delivery.
-              </p>
-            </div>
-            <div style={styles.aboutImageWrapper}>
-              <img
-                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80"
-                alt="About Data Prowess"
-                style={styles.aboutImage}
-              />
-            </div>
+      <section ref={refs.about} style={{ ...styles.autoSection, ...styles.about }}>
+        <div style={styles.overlayAbout}></div>
+        <div style={styles.aboutContainer}>
+          <div style={styles.aboutText}>
+            <h2 style={styles.aboutTitle}>About Us</h2>
+            <p style={styles.aboutParagraph}>
+              Data Prowess is a Software Development and Consulting company dedicated to excellence. We provide Data Engineering, Analytics (Descriptive & Prescriptive), Application Development, Quality Assurance, and enterprise solutions.
+            </p>
+            <p style={styles.aboutParagraph}>
+              Our core competency and thought leadership are built around data and analytics. We specialize in application development and testing, providing innovative solutions tailored to your business needs.
+            </p>
+          </div>
+          <div style={styles.aboutImageContainer}>
+            <img
+              src="https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=800&q=80"
+              alt="About Data Prowess"
+              style={styles.aboutImage}
+            />
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Services Section */}
-      <section id="services" style={styles.sectionWrapper}>
+      <section ref={refs.services} style={styles.centeredSection}>
         <Services />
       </section>
 
       {/* Careers Section */}
-      <motion.section id="careers" style={styles.careers}>
-        <div style={styles.careersOverlay}>
-          <h2>Careers</h2>
-          <p>Join our team and grow your career with Data Prowess.</p>
-          <div style={styles.jobGrid}>
-            <div style={styles.jobCard}>
-              <h3>Frontend Developer</h3>
-              <p>
-                Build modern, responsive web applications with React, JavaScript
-                and Tailwind CSS.
-              </p>
-              <ul>
-                <li>Experience: 1-3 years</li>
-                <li>Skills: React, HTML, CSS, JavaScript</li>
-              </ul>
-            </div>
-            <div style={styles.jobCard}>
-              <h3>Data Engineer</h3>
-              <p>
-                Work with large-scale data pipelines and ensure data quality and
-                performance.
-              </p>
-              <ul>
-                <li>Experience: 2-4 years</li>
-                <li>Skills: Python, SQL, ETL, Cloud</li>
-              </ul>
-            </div>
-            <div style={styles.jobCard}>
-              <h3>QA Engineer</h3>
-              <p>
-                Ensure our applications meet the highest quality standards
-                through manual and automation testing.
-              </p>
-              <ul>
-                <li>Experience: 1-2 years</li>
-                <li>Skills: Manual & Automation Testing</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </motion.section>
+      <section ref={refs.careers} style={{ ...styles.centeredSection, ...styles.careers }}>
+        <Careers />
+      </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" style={styles.sectionWrapper}>
+      <section ref={refs.portfolio} style={{ ...styles.centeredSection, ...styles.portfolio }}>
         <Portfolio />
       </section>
 
       {/* Contact Section */}
-      <section id="contact" style={styles.sectionWrapper}>
-        <Contact />
+      <section ref={refs.contact} style={styles.contactSection}>
+        <div style={styles.contactContainer}>
+          <div style={styles.contactLeft}>
+            <div style={styles.contactFormWrapper}>
+              <Contact />
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
 }
 
 const styles = {
-  scrollContainer: {
-    height: "100vh",
-    overflowY: "scroll",
-    scrollSnapType: "y mandatory",
-  },
-  hero: {
-    height: "100vh",
-    scrollSnapAlign: "start",
-    backgroundImage:
-      "url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  heroOverlay: {
-    backgroundColor: "rgba(0,0,0,0.65)",
-    padding: "60px",
-    borderRadius: "12px",
-    color: "#fff",
-    textAlign: "center",
-    maxWidth: "700px",
-  },
-  heroTitle: { fontSize: "3rem", marginBottom: "20px" },
-  heroSubtitle: { fontSize: "1.2rem", fontWeight: "300" },
+  fullSection: { height: "100vh", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundSize: "cover", backgroundPosition: "center", position: "relative" },
+  autoSection: { minHeight: "100vh", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", padding: "60px 20px", backgroundSize: "cover", backgroundPosition: "center", position: "relative" },
+  overlay: { backgroundColor: "rgba(0,0,0,0.6)", padding: "40px", borderRadius: "12px", maxWidth: "900px", textAlign: "center", color: "#fff" },
+  overlayAbout: { position: "absolute", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.5)", zIndex: 1, borderRadius: "12px" },
+  title: { fontSize: "3rem", marginBottom: "20px", fontWeight: "700", color: "#fff" },
+  subtitle: { fontSize: "1.5rem", fontWeight: "400", color: "#fff" },
 
-  about: {
-    height: "100vh",
-    scrollSnapAlign: "start",
-    backgroundImage:
-      "url('https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=1920&q=80')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "60px 20px",
-  },
-  aboutOverlay: {
-    backgroundColor: "rgba(255,255,255,0.95)",
-    padding: "50px",
-    borderRadius: "12px",
-    color: "#111",
-    maxWidth: "1100px",
-    lineHeight: "1.6",
-  },
-  aboutContent: {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    gap: "40px",
-  },
-  aboutText: { flex: 1, fontSize: "1.05rem", textAlign: "justify" },
-  aboutImageWrapper: { flex: 1, textAlign: "center" },
-  aboutImage: {
-    width: "100%",
-    maxWidth: "450px",
-    borderRadius: "12px",
-    boxShadow: "0 6px 15px rgba(0,0,0,0.15)",
-  },
+  home: { backgroundImage: "url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80')" },
+  about: { backgroundImage: "url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=80')" },
 
-  sectionWrapper: {
-    height: "100vh",
-    scrollSnapAlign: "start",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "60px 20px",
-  },
+  aboutContainer: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "40px", flexWrap: "wrap", maxWidth: "1200px", width: "100%", position: "relative", zIndex: 2 },
+  aboutText: { flex: 1, minWidth: "300px" },
+  aboutTitle: { fontSize: "3rem", color: "#fff", marginBottom: "25px", fontWeight: "700" },
+  aboutParagraph: { fontSize: "1.3rem", lineHeight: "1.9", color: "#fff", marginBottom: "20px" },
+  aboutImageContainer: { flex: 1, minWidth: "300px", textAlign: "center" },
+  aboutImage: { width: "100%", maxWidth: "500px", borderRadius: "12px", boxShadow: "0 8px 20px rgba(0,0,0,0.3)" },
 
-  // Careers Section
-  careers: {
-    height: "100vh",
-    scrollSnapAlign: "start",
-    backgroundImage:
-      "url('https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=1920&q=80')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "60px 20px",
-    textAlign: "center",
-  },
-  careersOverlay: {
-    backgroundColor: "rgba(0,0,0,0.6)",
-    padding: "50px",
-    borderRadius: "12px",
-    color: "#fff",
-    maxWidth: "1100px",
-    width: "100%",
-  },
-  jobGrid: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: "30px",
-    marginTop: "30px",
-  },
-  jobCard: {
-    backgroundColor: "#fff",
-    color: "#111",
-    borderRadius: "12px",
-    boxShadow: "0 6px 15px rgba(0,0,0,0.2)",
-    width: "300px",
-    padding: "20px",
-    textAlign: "left",
-    transition: "transform 0.3s ease",
-  },
+  centeredSection: { width: "100%", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "60px 20px", backgroundSize: "cover", backgroundPosition: "center", position: "relative" },
+  careers: { backgroundImage: "url('https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=1920&q=80')" },
+  portfolio: { backgroundImage: "url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1920&q=80')" },
+
+  contactSection: { minHeight: "100vh", width: "100%", backgroundImage: "url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80')", backgroundSize: "cover", backgroundPosition: "center", display: "flex", justifyContent: "center", alignItems: "center", padding: "60px 20px", flexDirection: "column", position: "relative" },
+  contactContainer: { display: "flex", flexWrap: "wrap", width: "100%", maxWidth: "1200px", gap: "40px", position: "relative", zIndex: 2 },
+  contactLeft: { flex: 2, minWidth: "350px", display: "flex", flexDirection: "column", gap: "30px" },
+  contactFormWrapper: { backgroundColor: "rgba(255, 255, 255, 0.95)", padding: "30px", borderRadius: "15px", boxShadow: "0 10px 30px rgba(0,0,0,0.3)" },
 };

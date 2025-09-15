@@ -1,0 +1,169 @@
+/* ===================== GENERAL STYLES ===================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+body, html, #root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ===================== NAVBAR ===================== */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 70px;
+  background-color: rgba(0,0,0,0.85);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  flex-wrap: wrap;
+}
+
+nav img {
+  height: 150px;
+  width: 100px;
+  object-fit: contain;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+nav ul li {
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+nav ul li:hover {
+  color: #1a73e8;
+}
+
+nav a.loginBtn {
+  background-color: #1a73e8;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+nav a.loginBtn:hover {
+  background-color: #155cb0;
+}
+
+/* ===================== SECTIONS ===================== */
+section.home h1 { font-size: 3rem; }
+section.home p { font-size: 1.5rem; }
+
+.aboutContainer {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+}
+
+.aboutText {
+  flex: 1;
+  min-width: 300px;
+}
+
+.aboutText h2 { font-size: 3rem; }
+.aboutText p { font-size: 1.3rem; }
+
+.aboutImageContainer img { max-width: 500px; }
+
+.career-card { flex: 1 1 300px; max-width: 350px; }
+.portfolio-card { width: 300px; padding: 20px; }
+
+.contact-container {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+}
+
+.contactLeft { flex: 2; min-width: 350px; }
+.contactFormWrapper { padding: 30px; }
+
+/* ===================== MEDIA QUERIES ===================== */
+
+/* 2K / Large Desktop */
+@media screen and (max-width: 2560px) {
+  section.home h1 { font-size: 2.8rem; }
+  section.home p { font-size: 1.4rem; }
+  .aboutText h2 { font-size: 2.8rem; }
+  .aboutText p { font-size: 1.25rem; }
+}
+
+/* Desktop */
+@media screen and (max-width: 1920px) {
+  section.home h1 { font-size: 2.6rem; }
+  section.home p { font-size: 1.3rem; }
+  .aboutText h2 { font-size: 2.6rem; }
+  .aboutText p { font-size: 1.2rem; }
+}
+
+/* Laptop */
+@media screen and (max-width: 1440px) {
+  nav img { height: 110px; }
+  section.home h1 { font-size: 2.4rem; }
+  section.home p { font-size: 1.2rem; }
+  .aboutText h2 { font-size: 2.4rem; }
+  .aboutText p { font-size: 1.15rem; }
+}
+
+/* Tablet */
+@media screen and (max-width: 1199px) {
+  nav { padding: 0 30px; }
+  section.home h1 { font-size: 2.2rem; }
+  section.home p { font-size: 1.1rem; }
+  .aboutText h2 { font-size: 2.2rem; }
+  .aboutText p { font-size: 1.1rem; }
+  .contact-container { flex-wrap: wrap; gap: 20px; }
+}
+
+/* Mobile Large (L) 991px */
+@media screen and (max-width: 991px) {
+  section.home h1 { font-size: 2rem; }
+  section.home p { font-size: 1rem; }
+  .aboutContainer { flex-direction: column; gap: 20px; }
+  .career-card, .portfolio-card { max-width: 95%; margin: 0 auto; }
+  .contact-container { flex-direction: column; gap: 20px; }
+  .contactFormWrapper { width: 100%; padding: 20px; }
+}
+
+/* Mobile Medium (M) 767px */
+@media screen and (max-width: 767px) {
+  nav { flex-direction: column; padding: 20px; height: auto; }
+  nav ul { flex-direction: column; gap: 15px; margin-top: 15px; display: none; } /* hide links by default */
+  nav ul.open { display: flex; } /* open when hamburger clicked */
+  section.home h1 { font-size: 1.8rem; }
+  section.home p { font-size: 0.95rem; }
+  .aboutText h2 { font-size: 1.8rem; }
+  .aboutText p { font-size: 0.95rem; }
+  .aboutImageContainer img { max-width: 100%; }
+}
+
+/* Mobile Small (S) 480px */
+@media screen and (max-width: 480px) {
+  nav { padding: 10px 15px; }
+  section.home h1 { font-size: 1.5rem; }
+  section.home p { font-size: 0.85rem; }
+  .aboutText h2 { font-size: 1.5rem; }
+  .aboutText p { font-size: 0.85rem; }
+  .career-card, .portfolio-card { width: 100%; padding: 10px; }
+  .contactFormWrapper { padding: 15px; }
+}

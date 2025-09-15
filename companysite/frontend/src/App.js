@@ -1,60 +1,47 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
+
 import Home from "./Home";
 import Services from "./Services";
 import Contact from "./Contact";
+import AdminDashboard from "./AdminDashboard";
+import Login from "./Login";
+import './responsive.css';
 
-// ProtectedRoute component
-function ProtectedRoute({ children }) {
+
+
+function AdminRoute({ children }) {
   const token = localStorage.getItem("token");
-  if (!token) return <Navigate to="/login" />;
+  const username = localStorage.getItem("username");
+  if (!token || username !== "admin123") {
+    return <Navigate to="/admin/login" replace />;
+  }
   return children;
 }
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Root path shows Login */}
-        <Route path="/" element={<Login />} />
+        {/* Public site */}
+        <Route path="/" element={<Home />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/contact" element={<Contact />} />
 
-        {/* Authentication */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-
-        {/* Protected pages */}
+        {/* Admin */}
+        <Route path="/admin/login" element={<Login />} />
         <Route
-          path="/home"
+          path="/admin/dashboard"
           element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/services"
-          element={
-            <ProtectedRoute>
-              <Services />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <ProtectedRoute>
-              <Contact />
-            </ProtectedRoute>
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
           }
         />
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* Catch-all */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default App;

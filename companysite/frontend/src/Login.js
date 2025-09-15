@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiPost } from "./api";
 
 export default function Login() {
@@ -9,46 +9,58 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMsg(""); // Clear old messages
+    setMsg("");
 
     try {
       const res = await apiPost("login/", form, false);
 
       if (res && res.access) {
+        // Save token + username to localStorage
         localStorage.setItem("token", res.access);
-        setMsg("✅ Login successful! Redirecting...");
-        setTimeout(() => navigate("/home"), 1000); // Redirect to Home
+        localStorage.setItem("username", form.username);
+
+        // Redirect based on user type
+        if (form.username === "admin123") {
+          setMsg("✅ Admin login successful! Redirecting...");
+          setTimeout(() => navigate("/admin/dashboard"), 1000);
+        } else {
+          setMsg("✅ Login successful! Redirecting...");
+          setTimeout(() => navigate("/"), 1000);
+        }
       } else {
         setMsg("❌ Login failed. Check your credentials.");
       }
     } catch (err) {
       console.error("Login error:", err);
-      if (err?.detail) setMsg(`❌ ${err.detail}`);
-      else setMsg("⚠️ Network or server error. Try again.");
+      setMsg(
+        err?.detail
+          ? `❌ ${err.detail}`
+          : "⚠️ Network or server error. Please try again."
+      );
     }
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h2 style={styles.title}>Login</h2>
+        <h2 style={styles.title}>Admin Login</h2>
 
         <form onSubmit={handleSubmit} style={styles.form}>
           <input
             type="text"
             placeholder="Username"
-            required
             value={form.username}
             onChange={(e) => setForm({ ...form, username: e.target.value })}
             style={styles.input}
+            required
           />
           <input
             type="password"
             placeholder="Password"
-            required
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             style={styles.input}
+            required
           />
           <button type="submit" style={styles.button}>
             Login
@@ -56,10 +68,6 @@ export default function Login() {
         </form>
 
         {msg && <div style={styles.msg}>{msg}</div>}
-
-        <p style={styles.linkText}>
-          Don&apos;t have an account? <Link to="/register">Register here</Link>
-        </p>
       </div>
     </div>
   );
@@ -69,7 +77,7 @@ const styles = {
   container: {
     height: "100vh",
     backgroundImage:
-      "url('https://sharovarskyi.com/blog/posts/dotnet-obs-plugin-with-nativeaot/static/obs.jpg')", // ✅ online background image
+      "url('https://sharovarskyi.com/blog/posts/dotnet-obs-plugin-with-nativeaot/static/obs.jpg')",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
@@ -78,7 +86,7 @@ const styles = {
     alignItems: "center",
   },
   card: {
-    backgroundColor: "rgba(255, 255, 255, 0.9)", // semi-transparent for readability
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     padding: "40px",
     borderRadius: "12px",
     width: "350px",
@@ -110,5 +118,4 @@ const styles = {
     color: "#d32f2f",
     whiteSpace: "pre-line",
   },
-  linkText: { marginTop: "20px", fontSize: "14px", color: "#333" },
 };
