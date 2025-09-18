@@ -66,104 +66,141 @@ nav a.loginBtn:hover {
   background-color: #155cb0;
 }
 
-/* ===================== SECTIONS ===================== */
-section.home h1 { font-size: 3rem; }
-section.home p { font-size: 1.5rem; }
-
-.aboutContainer {
+/* ===================== CONTACT ===================== */
+.contact-section {
+  width: 100%;
+  background: #f9f9f9;
+  padding: 100px 20px;
   display: flex;
-  gap: 40px;
-  max-width: 1200px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.aboutText {
-  flex: 1;
-  min-width: 300px;
+.contact-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #ff6600;
+  text-align: center;
 }
 
-.aboutText h2 { font-size: 3rem; }
-.aboutText p { font-size: 1.3rem; }
-
-.aboutImageContainer img { max-width: 500px; }
-
-.career-card { flex: 1 1 300px; max-width: 350px; }
-.portfolio-card { width: 300px; padding: 20px; }
-
+/* Main container */
 .contact-container {
   display: flex;
+  justify-content: center;
+  align-items: stretch;
   gap: 40px;
   max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.contactLeft { flex: 2; min-width: 350px; }
-.contactFormWrapper { padding: 30px; }
+/* Left form + right office info */
+.contactFormWrapper,
+.contactLeft {
+  flex: 1;
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form styling */
+.contactFormWrapper form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.contactFormWrapper input,
+.contactFormWrapper textarea {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  width: 100%;
+}
+
+.contactFormWrapper textarea {
+  flex: 1;
+  resize: none;
+}
+
+.contactFormWrapper button {
+  background: linear-gradient(90deg, #ff6600, #ff8533);
+  color: #fff;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contactFormWrapper button:hover {
+  background: linear-gradient(90deg, #e65c00, #ff751a);
+}
+
+/* Office Info */
+.contactLeft h3 {
+  color: #ff6600;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.contactLeft iframe {
+  flex: 1;
+  border-radius: 12px;
+  margin-top: 20px;
+  width: 100%;
+  min-height: 250px;
+  border: 0;
+}
 
 /* ===================== MEDIA QUERIES ===================== */
 
-/* 2K / Large Desktop */
-@media screen and (max-width: 2560px) {
-  section.home h1 { font-size: 2.8rem; }
-  section.home p { font-size: 1.4rem; }
-  .aboutText h2 { font-size: 2.8rem; }
-  .aboutText p { font-size: 1.25rem; }
+/* Large Screens */
+@media screen and (min-width: 1921px) {
+  .contact-container { max-width: 1400px; }
+  .contact-section h2 { font-size: 2.8rem; }
 }
 
-/* Desktop */
+/* Desktop up to 1920px */
 @media screen and (max-width: 1920px) {
-  section.home h1 { font-size: 2.6rem; }
-  section.home p { font-size: 1.3rem; }
-  .aboutText h2 { font-size: 2.6rem; }
-  .aboutText p { font-size: 1.2rem; }
+  .contact-container { max-width: 1200px; }
 }
 
-/* Laptop */
+/* Laptop 1440px */
 @media screen and (max-width: 1440px) {
   nav img { height: 110px; }
-  section.home h1 { font-size: 2.4rem; }
-  section.home p { font-size: 1.2rem; }
-  .aboutText h2 { font-size: 2.4rem; }
-  .aboutText p { font-size: 1.15rem; }
+  .contact-container { max-width: 1000px; }
 }
 
 /* Tablet */
-@media screen and (max-width: 1199px) {
-  nav { padding: 0 30px; }
-  section.home h1 { font-size: 2.2rem; }
-  section.home p { font-size: 1.1rem; }
-  .aboutText h2 { font-size: 2.2rem; }
-  .aboutText p { font-size: 1.1rem; }
-  .contact-container { flex-wrap: wrap; gap: 20px; }
-}
-
-/* Mobile Large (L) 991px */
 @media screen and (max-width: 991px) {
-  section.home h1 { font-size: 2rem; }
-  section.home p { font-size: 1rem; }
-  .aboutContainer { flex-direction: column; gap: 20px; }
-  .career-card, .portfolio-card { max-width: 95%; margin: 0 auto; }
-  .contact-container { flex-direction: column; gap: 20px; }
-  .contactFormWrapper { width: 100%; padding: 20px; }
+  .contact-container { flex-direction: column; max-width: 90%; gap: 30px; }
+  .contactFormWrapper, .contactLeft { width: 100%; padding: 30px; }
 }
 
-/* Mobile Medium (M) 767px */
+/* Mobile */
 @media screen and (max-width: 767px) {
   nav { flex-direction: column; padding: 20px; height: auto; }
-  nav ul { flex-direction: column; gap: 15px; margin-top: 15px; display: none; } /* hide links by default */
-  nav ul.open { display: flex; } /* open when hamburger clicked */
-  section.home h1 { font-size: 1.8rem; }
-  section.home p { font-size: 0.95rem; }
-  .aboutText h2 { font-size: 1.8rem; }
-  .aboutText p { font-size: 0.95rem; }
-  .aboutImageContainer img { max-width: 100%; }
+  nav ul { flex-direction: column; gap: 15px; margin-top: 15px; display: none; }
+  nav ul.open { display: flex; }
+  .contact-container { gap: 20px; padding: 0 15px; }
+  .contactFormWrapper, .contactLeft { padding: 20px; }
+  .contact-section h2 { font-size: 1.8rem; }
 }
 
-/* Mobile Small (S) 480px */
+/* Extra small mobile */
 @media screen and (max-width: 480px) {
-  nav { padding: 10px 15px; }
-  section.home h1 { font-size: 1.5rem; }
-  section.home p { font-size: 0.85rem; }
-  .aboutText h2 { font-size: 1.5rem; }
-  .aboutText p { font-size: 0.85rem; }
-  .career-card, .portfolio-card { width: 100%; padding: 10px; }
-  .contactFormWrapper { padding: 15px; }
+  .contact-section h2 { font-size: 1.6rem; }
+  .contactFormWrapper, .contactLeft { padding: 15px; }
 }

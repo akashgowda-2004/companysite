@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
+import resolutionLogo from "./assets/resolutionlife.png";
+import lendleaseLogo from "./assets/lendlease.png";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -9,166 +11,281 @@ export default function Contact() {
     message: "",
   });
 
-  const handleChange = (e) => {
+  // Reset body margin & padding to avoid gaps
+  useEffect(() => {
+    document.body.style.margin = "0";
+    document.body.style.padding = "0";
+  }, []);
+
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData); // Replace with API call
+    console.log("Form submitted:", formData);
+    setFormData({ name: "", phone: "", email: "", message: "" });
+  };
+
+  const handleDirections = () => {
+    const officeAddress = encodeURIComponent(
+      "711, 2nd Floor, Modi Hospital Road, West of Chord Road, 2nd Stage, Rajaji Nagar, Bengaluru, Karnataka – 560086"
+    );
+    window.open(
+      `https://www.google.com/maps/dir/?api=1&destination=${officeAddress}`,
+      "_blank"
+    );
+  };
+
+  const styles = {
+    section: {
+      width: "100vw",
+      minHeight: "100vh",
+      background: "#f9f9f9",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      flexDirection: "column",
+      padding: "80px 0", // vertical padding only
+      boxSizing: "border-box",
+    },
+    overlay: {
+      width: "100%",
+      maxWidth: "1200px",
+      margin: "0 auto",
+      display: "flex",
+      flexDirection: "column",
+      gap: "40px",
+      boxSizing: "border-box",
+      padding: "0 20px", // horizontal padding only for content
+    },
+    heading: {
+      textAlign: "center",
+      color: "#ff6600",
+      fontSize: "2.8rem",
+      fontWeight: "800",
+      marginBottom: "40px",
+    },
+    grid: {
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "40px",
+      justifyContent: "center",
+    },
+    card: {
+      background: "#fff",
+      padding: "30px",
+      borderRadius: "15px",
+      boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
+      display: "flex",
+      flexDirection: "column",
+      flex: "1 1 360px",
+      minWidth: "300px",
+    },
+    input: {
+      padding: "12px",
+      borderRadius: "10px",
+      border: "1px solid #ddd",
+      fontSize: "1rem",
+      width: "100%",
+      marginBottom: "12px",
+      outline: "none",
+      boxSizing: "border-box",
+    },
+    textarea: {
+      padding: "12px",
+      borderRadius: "10px",
+      border: "1px solid #ddd",
+      fontSize: "1rem",
+      width: "100%",
+      marginBottom: "12px",
+      resize: "none",
+      outline: "none",
+      boxSizing: "border-box",
+    },
+    btnPrimary: {
+      background: "linear-gradient(90deg, #ff6600, #ff8533)",
+      color: "#fff",
+      border: "none",
+      padding: "14px",
+      borderRadius: "10px",
+      fontWeight: "600",
+      cursor: "pointer",
+      transition: "0.3s",
+    },
+    btnSecondary: {
+      marginTop: "16px",
+      background: "#ff6600",
+      color: "#fff",
+      border: "none",
+      padding: "12px 18px",
+      borderRadius: "10px",
+      fontWeight: "600",
+      cursor: "pointer",
+    },
+    socialIcons: {
+      display: "flex",
+      justifyContent: "center",
+      gap: "15px",
+      marginTop: "12px",
+    },
+    socialIcon: {
+      width: "45px",
+      height: "45px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: "50%",
+      background: "#f3f3f3",
+      color: "#ff6600",
+    },
+    map: {
+      width: "100%",
+      height: "240px",
+      border: "0",
+      borderRadius: "12px",
+      margin: "20px 0",
+    },
+    subHeading: {
+      color: "#ff6600",
+      marginBottom: "12px",
+      textAlign: "center",
+    },
+    clientsSection: {
+      marginTop: "60px",
+      textAlign: "center",
+    },
+    clientLogos: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      gap: "40px",
+      marginTop: "20px",
+    },
+    clientLogo: {
+      maxWidth: "150px",
+      objectFit: "contain",
+      transition: "transform 0.3s",
+    },
   };
 
   return (
-    <div style={{ padding: "60px 15px", background: "linear-gradient(to right, #f8f9fa, #eef1f5)" }}>
-      <h2
-        style={{
-          textAlign: "center",
-          fontSize: "2rem",
-          fontWeight: "800",
-          marginBottom: "30px",
-          color: "#ff6600",
-        }}
-      >
-        Get in Touch
-      </h2>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "30px",
-          maxWidth: "1200px",
-          margin: "0 auto",
-        }}
-      >
-        {/* Contact Form */}
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "15px",
-            background: "#fff",
-            padding: "25px",
-            borderRadius: "15px",
-            boxShadow: "0px 6px 20px rgba(0,0,0,0.08)",
-          }}
-        >
-          <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} required style={inputStyle} />
-          <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required style={inputStyle} />
-          <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required style={inputStyle} />
-          <textarea name="message" placeholder="Write your message..." value={formData.message} onChange={handleChange} required rows="5" style={inputStyle} />
-          <button
-            type="submit"
-            style={{
-              background: "linear-gradient(90deg, #ff6600, #ff8533)",
-              color: "#fff",
-              padding: "14px",
-              fontSize: "1rem",
-              fontWeight: "600",
-              border: "none",
-              borderRadius: "10px",
-              cursor: "pointer",
-              transition: "0.3s",
-            }}
-          >
-            Send Message
-          </button>
-        </form>
-
-        {/* Office Info */}
-        <div
-          style={{
-            background: "#fff",
-            padding: "25px",
-            borderRadius: "15px",
-            boxShadow: "0px 6px 20px rgba(0,0,0,0.08)",
-          }}
-        >
-          <h3 style={{ color: "#ff6600", fontSize: "1.5rem", marginBottom: "15px" }}>
-            Our Office
-          </h3>
-          <p>
-            711, 2nd Floor, Modi Hospital Rd, <br />
-            West of Chord Road, 2nd Stage, <br />
-            Rajaji Nagar, Bengaluru, Karnataka – 560086
-          </p>
-          <p>📞 +91 63664 62576</p>
-          <p>✉️ info@data-prowess.com</p>
-
-          <h4 style={{ marginTop: "20px", color: "#ff6600" }}>Business Hours</h4>
-          <p>Mon - Fri: 9:00 AM – 6:00 PM</p>
-          <p>Sat: 10:00 AM – 2:00 PM</p>
-          <p>Sun: Closed</p>
-
-          <div style={{ marginTop: "20px", display: "flex", gap: "15px" }}>
-            <a href="https://www.linkedin.com/company/data-prowess" target="_blank" rel="noreferrer" style={iconStyle}>
-              <FaLinkedin size={28} />
-            </a>
-            <a href="https://github.com/dataprowess" target="_blank" rel="noreferrer" style={iconStyle}>
-              <FaGithub size={28} />
-            </a>
-            <a href="https://twitter.com/dataprowess" target="_blank" rel="noreferrer" style={iconStyle}>
-              <FaTwitter size={28} />
-            </a>
+    <section style={styles.section}>
+      <div style={styles.overlay}>
+        <h2 style={styles.heading}>Get in Touch</h2>
+        <div style={styles.grid}>
+          {/* Contact Form */}
+          <div style={styles.card}>
+            <form onSubmit={handleSubmit}>
+              <input
+                name="name"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                style={styles.input}
+              />
+              <input
+                name="phone"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                style={styles.input}
+              />
+              <input
+                name="email"
+                type="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                style={styles.input}
+              />
+              <textarea
+                name="message"
+                placeholder="Write your message..."
+                value={formData.message}
+                onChange={handleChange}
+                rows="5"
+                style={styles.textarea}
+              />
+              <button type="submit" style={styles.btnPrimary}>
+                Send Message
+              </button>
+            </form>
           </div>
 
-          <div style={{ marginTop: "30px" }}>
+          {/* Office Info */}
+          <div style={styles.card}>
+            <h3 style={styles.subHeading}>Our Office</h3>
+            <p style={{ textAlign: "center" }}>
+              711, 2nd Floor, Modi Hospital Road,
+              <br />
+              West of Chord Road, 2nd Stage,
+              <br />
+              Rajaji Nagar, Bengaluru, Karnataka – 560086
+            </p>
+            <p style={{ textAlign: "center" }}>📞 +91 63664 62576</p>
+            <p style={{ textAlign: "center" }}>✉️ info@data-prowess.com</p>
+
+            <h4 style={styles.subHeading}>Business Hours</h4>
+            <p style={{ textAlign: "center" }}>Mon – Fri: 9:00 AM – 6:00 PM</p>
+            <p style={{ textAlign: "center" }}>Sat: 10:00 AM – 2:00 PM</p>
+            <p style={{ textAlign: "center" }}>Sun: Closed</p>
+
+            <div style={styles.socialIcons}>
+              <a
+                href="https://www.linkedin.com/company/data-prowess"
+                target="_blank"
+                rel="noreferrer"
+                style={styles.socialIcon}
+              >
+                <FaLinkedin size={20} />
+              </a>
+              <a
+                href="https://github.com/dataprowess"
+                target="_blank"
+                rel="noreferrer"
+                style={styles.socialIcon}
+              >
+                <FaGithub size={20} />
+              </a>
+              <a
+                href="https://twitter.com/dataprowess"
+                target="_blank"
+                rel="noreferrer"
+                style={styles.socialIcon}
+              >
+                <FaTwitter size={20} />
+              </a>
+            </div>
+
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.539819183391!2d77.55204047484472!3d12.938906987377853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3dd0c7b85c23%3A0xa69b084f14b1b09!2sRajajinagar%2C%20Bengaluru%2C%20Karnataka%20560010!5e0!3m2!1sen!2sin!4v1694576421302!5m2!1sen!2sin"
-              width="100%"
-              height="250"
-              style={{ border: 0, borderRadius: "12px" }}
-              allowFullScreen=""
+              title="Office Location"
+              src="https://www.google.com/maps?q=711, 2nd Floor, Modi Hospital Road, Rajaji Nagar, Bengaluru&output=embed"
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Google Map"
-            ></iframe>
+              style={styles.map}
+            />
+            <button onClick={handleDirections} style={styles.btnSecondary}>
+              Get Directions
+            </button>
+          </div>
+        </div>
+
+        {/* Our Clients */}
+        <div style={styles.clientsSection}>
+          <h3 style={styles.subHeading}>Our Clients</h3>
+          <div style={styles.clientLogos}>
+            <img
+              src={resolutionLogo}
+              alt="Resolution Life"
+              style={styles.clientLogo}
+            />
+            <img src={lendleaseLogo} alt="Lendlease" style={styles.clientLogo} />
+            
           </div>
         </div>
       </div>
-
-      {/* Responsive Styles */}
-      <style>
-        {`
-          @media (max-width: 768px) {
-            div[style*="grid-template-columns"] {
-              grid-template-columns: 1fr !important;
-            }
-          }
-          @media (max-width: 480px) {
-            h2 {
-              font-size: 1.6rem !important;
-            }
-            form, .office-info {
-              padding: 18px !important;
-            }
-          }
-        `}
-      </style>
-    </div>
+    </section>
   );
 }
-
-const inputStyle = {
-  padding: "12px",
-  border: "1px solid #ddd",
-  borderRadius: "10px",
-  fontSize: "1rem",
-  outline: "none",
-  transition: "0.2s",
-};
-
-const iconStyle = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "45px",
-  height: "45px",
-  borderRadius: "50%",
-  background: "#f1f1f1",
-  transition: "0.3s",
-  color: "#ff6600",
-  textDecoration: "none",
-  boxShadow: "0 3px 6px rgba(0,0,0,0.1)",
-};

@@ -1,12 +1,18 @@
+// src/AdminDashboard.jsx
 import React, { useState, useEffect } from "react";
 import bgImage from "./assets/admin-bg.jpg";
 
 export default function AdminDashboard() {
   const [openings, setOpenings] = useState([]);
-  const [form, setForm] = useState({ title: "", description: "", experience: "", skills: "" });
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    experience: "",
+    skills: "",
+  });
   const [viewMore, setViewMore] = useState(null);
 
-  // Fetch job openings
+  /* ------------ Fetch job openings ------------ */
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/careers/")
       .then((res) => res.json())
@@ -14,7 +20,7 @@ export default function AdminDashboard() {
       .catch((err) => console.error("Fetch error:", err));
   }, []);
 
-  // Add a new job
+  /* ------------ Add a new job ------------ */
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
@@ -31,7 +37,7 @@ export default function AdminDashboard() {
     }
   };
 
-  // Delete a job
+  /* ------------ Delete a job ------------ */
   const handleDelete = async (id) => {
     try {
       await fetch(`http://127.0.0.1:8000/api/careers/${id}/`, { method: "DELETE" });
@@ -48,7 +54,7 @@ export default function AdminDashboard() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         minHeight: "100vh",
-        color: "white",
+        color: "#fff",
         display: "flex",
         flexDirection: "column",
       }}
@@ -69,19 +75,20 @@ export default function AdminDashboard() {
         <button
           onClick={() => (window.location.href = "/")}
           style={{
-            background: "linear-gradient(135deg, #ff4e50, #f9d423)",
+            background: "linear-gradient(135deg, #ff6600, #ff8533)",
             padding: "10px 20px",
             border: "none",
             borderRadius: "10px",
             cursor: "pointer",
             fontWeight: "bold",
+            color: "#fff",
           }}
         >
           Logout
         </button>
       </header>
 
-      {/* ---------- ADD JOB FORM ---------- */}
+      {/* ---------- MAIN ---------- */}
       <main
         style={{
           flex: 1,
@@ -93,6 +100,7 @@ export default function AdminDashboard() {
           gap: "40px",
         }}
       >
+        {/* ---------- ADD JOB FORM ---------- */}
         <section
           style={{
             background: "rgba(0,0,0,0.7)",
@@ -103,8 +111,13 @@ export default function AdminDashboard() {
             width: "100%",
           }}
         >
-          <h2 style={{ marginBottom: "20px", textAlign: "center" }}>Add Job Opening</h2>
-          <form onSubmit={handleAdd} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <h2 style={{ marginBottom: "20px", textAlign: "center", color: "#ff6600" }}>
+            Add Job Opening
+          </h2>
+          <form
+            onSubmit={handleAdd}
+            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+          >
             <input
               placeholder="Title"
               value={form.title}
@@ -141,7 +154,15 @@ export default function AdminDashboard() {
 
         {/* ---------- CURRENT OPENINGS ---------- */}
         <section style={{ flex: 1, minWidth: "300px" }}>
-          <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Current Openings</h2>
+          <h2
+            style={{
+              textAlign: "center",
+              marginBottom: "20px",
+              color: "#ff6600",
+            }}
+          >
+            Current Openings
+          </h2>
           <div
             style={{
               display: "grid",
@@ -151,16 +172,22 @@ export default function AdminDashboard() {
           >
             {openings.map((job) => (
               <div key={job.id} style={jobCardStyle}>
-                <h3>{job.title}</h3>
+                <h3 style={{ color: "#ff8533" }}>{job.title}</h3>
                 <p><strong>Description:</strong> {job.description}</p>
                 <p><strong>Experience:</strong> {job.experience}</p>
                 <p><strong>Skills:</strong> {job.skills}</p>
+
                 <div style={{ marginTop: "15px" }}>
-                  <button onClick={() => handleDelete(job.id)} style={deleteButtonStyle}>
+                  <button
+                    onClick={() => handleDelete(job.id)}
+                    style={deleteButtonStyle}
+                  >
                     Delete Job
                   </button>
                   <button
-                    onClick={() => setViewMore(viewMore === job.id ? null : job.id)}
+                    onClick={() =>
+                      setViewMore(viewMore === job.id ? null : job.id)
+                    }
                     style={viewButtonStyle}
                   >
                     {viewMore === job.id ? "Hide Applicants" : "View Applicants"}
@@ -180,7 +207,7 @@ export default function AdminDashboard() {
                                 href={a.resume}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ color: "#06d6a0" }}
+                                style={{ color: "#ff6600" }}
                               >
                                 [Resume]
                               </a>
@@ -204,7 +231,7 @@ export default function AdminDashboard() {
   );
 }
 
-/* ---------- STYLES ---------- */
+/* ---------- INLINE STYLE OBJECTS ---------- */
 const inputStyle = {
   padding: "10px",
   borderRadius: "8px",
@@ -213,13 +240,14 @@ const inputStyle = {
 };
 
 const addButtonStyle = {
-  background: "#06d6a0",
-  color: "white",
-  padding: "10px",
+  background: "#ff6600",
+  color: "#fff",
+  padding: "12px",
   border: "none",
   borderRadius: "8px",
   cursor: "pointer",
   fontWeight: "bold",
+  transition: "background 0.3s",
 };
 
 const jobCardStyle = {
@@ -232,7 +260,7 @@ const jobCardStyle = {
 
 const deleteButtonStyle = {
   background: "#e63946",
-  color: "white",
+  color: "#fff",
   border: "none",
   padding: "8px 14px",
   borderRadius: "8px",
@@ -242,7 +270,7 @@ const deleteButtonStyle = {
 
 const viewButtonStyle = {
   background: "#1d3557",
-  color: "white",
+  color: "#fff",
   border: "none",
   padding: "8px 14px",
   borderRadius: "8px",
