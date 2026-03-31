@@ -7,16 +7,15 @@ from datetime import timedelta
 # ---------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "your-secret-key-here"   # 🔴 replace with env var in production
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]  # 🔴 set to your domain/IP in production
-
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key")
+DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 # ---------------------------------------------------
 # INSTALLED APPS
 # ---------------------------------------------------
 INSTALLED_APPS = [
+    # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -33,12 +32,11 @@ INSTALLED_APPS = [
     "core",
 ]
 
-
 # ---------------------------------------------------
 # MIDDLEWARE
 # ---------------------------------------------------
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",  # must be at the top for CORS
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -48,7 +46,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 # ---------------------------------------------------
 # URLS & WSGI
 # ---------------------------------------------------
@@ -57,7 +54,7 @@ ROOT_URLCONF = "companysite.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -72,29 +69,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "companysite.wsgi.application"
 
-
 # ---------------------------------------------------
 # DATABASE (MySQL)
 # ---------------------------------------------------
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "company_db",       # 🔴 your database name
-        "USER": "root",             # 🔴 your MySQL username
-        "PASSWORD": "1234",# 🔴 your MySQL password
-        "HOST": "localhost",        # or your DB server
-        "PORT": "3306",
+        "NAME": os.environ.get("MYSQL_DATABASE", "company_db"),
+        "USER": os.environ.get("MYSQL_USER", "root"),
+        "PASSWORD": os.environ.get("MYSQL_PASSWORD", "1234"),
+        "HOST": os.environ.get("MYSQL_HOST", "localhost"),
+        "PORT": os.environ.get("MYSQL_PORT", "3306"),
         "OPTIONS": {
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     }
 }
-
-# If mysqlclient fails on Windows, use pymysql:
-# In companysite/__init__.py add:
-#   import pymysql
-#   pymysql.install_as_MySQLdb()
-
 
 # ---------------------------------------------------
 # PASSWORD VALIDATION
@@ -106,7 +96,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-
 # ---------------------------------------------------
 # INTERNATIONALIZATION
 # ---------------------------------------------------
@@ -115,16 +104,16 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-
 # ---------------------------------------------------
 # STATIC & MEDIA
 # ---------------------------------------------------
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static",]
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# ✅ These two lines are critical for serving resumes
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-
 
 # ---------------------------------------------------
 # REST FRAMEWORK + JWT
@@ -134,7 +123,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.AllowAny",  # default; override per view
+        "rest_framework.permissions.AllowAny",
     ),
 }
 
@@ -148,17 +137,10 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-
 # ---------------------------------------------------
 # CORS
 # ---------------------------------------------------
-CORS_ALLOW_ALL_ORIGINS = True   # 🔴 dev only
-# For production, replace with:
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",
-#     "https://yourdomain.com",
-# ]
-
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all only in development
 
 # ---------------------------------------------------
 # DEFAULT PK FIELD

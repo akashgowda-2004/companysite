@@ -230,8 +230,7 @@ export default function Contact() {
 
             <h4 style={styles.subHeading}>Business Hours</h4>
             <p style={{ textAlign: "center" }}>Mon – Fri: 9:00 AM – 6:00 PM</p>
-            <p style={{ textAlign: "center" }}>Sat: 10:00 AM – 2:00 PM</p>
-            <p style={{ textAlign: "center" }}>Sun: Closed</p>
+            
 
             <div style={styles.socialIcons}>
               <a

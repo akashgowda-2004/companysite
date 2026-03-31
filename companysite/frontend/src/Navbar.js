@@ -106,7 +106,7 @@ const styles = {
     right: "20px",
     top: "37px", // ~1 cm below top
   },
-  bar: { width: "25px", height: "3px", backgroundColor: "#fff" },
+  bar: { width: "25px", height: "5px", backgroundColor: "#fff" },
   mobileMenu: {
     position: "absolute",
     top: "60px",
